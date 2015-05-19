@@ -12,6 +12,52 @@ var _ = require('lodash'),
     Picture = mongoose.model('Picture'),
     errorHandler = require(path.resolve('./modules/core/server/controllers/errors.server.controller'));
 
+
+
+
+function calculateMinImageSize(maxWidth, maxHeight, image) {
+    var aspectRatio = maxHeight / maxWidth;
+    var imgageAspectRatio = image.height() / image.width();
+    var targetwidth = maxWidth;
+    var targetheight = maxHeight;
+
+    if (aspectRatio > imgageAspectRatio) {
+        targetheight = targetwidth / image.width() * image.height();
+    }
+    else {
+        targetwidth = targetheight / image.height() * image.width();
+    }
+
+    var imageSize = {
+        width: targetwidth,
+        height: targetheight
+    };
+
+    return imageSize;
+}
+
+function calculateMaxImageSize(maxWidth, maxHeight, image) {
+    var aspectRatio = maxHeight / maxWidth;
+    var imgageAspectRatio = image.height() / image.width();
+    var targetwidth = maxWidth;
+    var targetheight = maxHeight;
+
+    if (aspectRatio < imgageAspectRatio) {
+        targetheight = targetwidth / image.width() * image.height();
+    }
+    else {
+        targetwidth = targetheight / image.height() * image.width();
+    }
+
+    var imageSize = {
+        width: targetwidth,
+        height: targetheight
+    };
+
+    return imageSize;
+}
+
+
 /**
  * Create a Picture
  */
@@ -62,11 +108,13 @@ exports.delete = function (req, res) {
     var picture = req.picture;
     var waterfallFunctions = [];
 
+
     //loop through the array of the picture sizes:
     var i;
     for (i = 0; i < picture.sizes.length; i++) {
         var unlinkPictureObject = {
             pictureSource: picture.sizes[i].source,
+            /* jshint loopfunc:true */
             unlinkPicture: function (callback) {
                 fs.unlink(this.pictureSource, function (error) {
                     if (error) {
@@ -268,46 +316,4 @@ exports.uploadImage = function (req, res) {
             res.jsonp(picture);
         }
     });
-};
-
-function calculateMinImageSize(maxWidth, maxHeight, image) {
-    var aspectRatio = maxHeight / maxWidth;
-    var imgageAspectRatio = image.height() / image.width();
-    var targetwidth = maxWidth;
-    var targetheight = maxHeight;
-
-    if (aspectRatio > imgageAspectRatio) {
-        var targetheight = targetwidth / image.width() * image.height();
-    }
-    else {
-        var targetwidth = targetheight / image.height() * image.width();
-    }
-
-    var imageSize = {
-        width: targetwidth,
-        height: targetheight
-    }
-
-    return imageSize;
-};
-
-function calculateMaxImageSize(maxWidth, maxHeight, image) {
-    var aspectRatio = maxHeight / maxWidth;
-    var imgageAspectRatio = image.height() / image.width();
-    var targetwidth = maxWidth;
-    var targetheight = maxHeight;
-
-    if (aspectRatio < imgageAspectRatio) {
-        var targetheight = targetwidth / image.width() * image.height();
-    }
-    else {
-        var targetwidth = targetheight / image.height() * image.width();
-    }
-
-    var imageSize = {
-        width: targetwidth,
-        height: targetheight
-    }
-
-    return imageSize;
 };
