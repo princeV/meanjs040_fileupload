@@ -147,8 +147,8 @@ exports.uploadImage = function (req, res) {
     var pictureNameFull = req.files.file.originalname;
     var pictureName = pictureNameFull.substr(0, pictureNameFull.lastIndexOf('.'));
     var pictureExtension = pictureNameFull.substr(pictureNameFull.lastIndexOf('.') + 1);
-    var picturePath = './modules/pictures/client/img/';
-    var pictureSavePath = 'modules/pictures/client/img/';
+    var picturePath = 'modules/pictures/client/img/';
+    var pictureSavePath = './modules/pictures/client/img/';
     var pictureBuffer = req.files.file.buffer;
 
     async.waterfall([
