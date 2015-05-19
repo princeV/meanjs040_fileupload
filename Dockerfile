@@ -1,4 +1,5 @@
-FROM dockerfile/nodejs
+#FROM dockerfile/nodejs
+FROM node:0.10.38
 
 MAINTAINER Matthias Luebken, matthias@catalyst-zero.com
 
@@ -21,9 +22,9 @@ RUN bower install --config.interactive=false --allow-root
 ADD . /home/mean
 
 # currently only works for development
-ENV NODE_ENV development
+ENV NODE_ENV production
 
 # Port 3000 for server
 # Port 35729 for livereload
 EXPOSE 3000 35729
-CMD ["grunt"]
+CMD ["grunt", "prod"]
