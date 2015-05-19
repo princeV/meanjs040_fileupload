@@ -1,0 +1,19 @@
+<section data-ng-controller="PicturesController" data-ng-init="find()">
+    <div class="page-header">
+        <h1>Pictures</h1>
+    </div>
+    <div class="list-group">
+        <a data-ng-repeat="picture in pictures" data-ng-href="/#!/pictures/{{picture._id}}" class="list-group-item">
+			<small class="list-group-item-text">
+				Posted on
+				<span data-ng-bind="picture.created | date:'medium'"></span>
+				by
+				<span data-ng-bind="picture.user.displayName"></span>
+			</small>
+			<h4 class="list-group-item-heading" data-ng-bind="picture.name"></h4>
+        </a>
+    </div>
+    <div class="alert alert-warning text-center" data-ng-hide="!pictures.$resolved || pictures.length">
+    	No Pictures yet, why don't you <a href="/#!/pictures/create">create one</a>?
+    </div>
+</section>

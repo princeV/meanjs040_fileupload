@@ -1,0 +1,72 @@
+<section data-ng-controller="PictureImgUploadController">
+    <div class="page-header">
+        <h1>New Picture</h1>
+    </div>
+    <div class="col-md-12">
+        <form class="form-horizontal" data-ng-submit="startUpload()">
+            <fieldset>
+                <div class="form-group">
+                    <label class="control-label" for="name">Name</label>
+
+                    <div class="controls">
+                        <input type="text" data-ng-model="name" id="name" class="form-control" placeholder="Name"
+                               required>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="control-label" for="select-file">Bild hochladen:</label><br/>
+                    <span class="btn btn-default btn-file">
+                        Bild ausw&auml;hlen... <input type="file" nv-file-select="" id="select-file" uploader="uploader" single/>
+                    </span>
+                </div>
+
+
+                <table class="table">
+                    <thead>
+                    <tr>
+                        <th width="50%">Name</th>
+                        <th ng-show="uploader.isHTML5">Gr&ouml;&szlig;e</th>
+                        <th ng-show="uploader.isHTML5">Status</th>
+                        <th>Optionen</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr ng-repeat="item in uploader.queue">
+                        <td>
+                            <strong>{{ item.file.name }}</strong>
+
+                            <div ng-show="uploader.isHTML5" ng-thumb="{ file: item._file, height: 100 }"></div>
+                        </td>
+                        <td ng-show="uploader.isHTML5" nowrap>{{ item.file.size/1024/1024|number:2 }} MB</td>
+                        <td ng-show="uploader.isHTML5">
+                            <div data-ng-show="loading" >
+                                <img src="http://www.nasa.gov/multimedia/videogallery/ajax-loader.gif" width="20"
+                                     height="20"/>speichert...
+                            </div>
+                        </td>
+                        <td>
+                            <button type="button" class="btn btn-danger btn-xs" ng-click="item.remove()">
+                                <span class="glyphicon glyphicon-trash"></span> Entfernen
+                            </button>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+
+                <div class="form-group">
+                    <input type="submit" class="btn btn-default">
+                </div>
+                <div data-ng-show="error" class="text-danger">
+                    <strong data-ng-bind="error"></strong>
+                </div>
+                <div data-ng-show="addingFileError" class="text-danger">
+                    <strong data-ng-bind="addingFileError"></strong>
+                </div>
+
+            </fieldset>
+        </form>
+    </div>
+
+
+</section>
