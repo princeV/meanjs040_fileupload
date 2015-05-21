@@ -195,8 +195,8 @@ exports.uploadImage = function (req, res) {
     var pictureNameFull = req.files.file.originalname;
     var pictureName = pictureNameFull.substr(0, pictureNameFull.lastIndexOf('.'));
     var pictureExtension = pictureNameFull.substr(pictureNameFull.lastIndexOf('.') + 1);
-    var picturePath = 'modules/pictures/client/img/';
-    var pictureSavePath = './modules/pictures/client/img/';
+    var picturePath = './modules/pictures/client/img/';
+    var pictureSavePath = './modules/pictures/img/';
     var pictureBuffer = req.files.file.buffer;
 
     async.waterfall([
@@ -229,7 +229,8 @@ exports.uploadImage = function (req, res) {
         },*/
         function writePictureMedium(image, callback) {
             //change the picturepath:
-            var picturePathFull = pictureSavePath.concat(pictureName, '_large.', pictureExtension);
+            var picturePathFull = picturePath.concat(pictureName, '_large.', pictureExtension);
+            var pictureSavePathFull = pictureSavePath.concat(pictureName, '_large.', pictureExtension);
             //calculate the image height:
             var imageSize = calculateMinImageSize(1024, 768, image);
             image.batch()
@@ -241,7 +242,7 @@ exports.uploadImage = function (req, res) {
                         picture.sizes.push(
                             {
                                 label: 'large',
-                                source: picturePathFull,
+                                source: pictureSavePathFull,
                                 width: image.width(),
                                 height: image.height()
                             }
@@ -252,7 +253,8 @@ exports.uploadImage = function (req, res) {
         },
         function writePictureMedium(image, callback) {
             //change the picturepath:
-            var picturePathFull = pictureSavePath.concat(pictureName, '_medium.', pictureExtension);
+            var picturePathFull = picturePath.concat(pictureName, '_medium.', pictureExtension);
+            var pictureSavePathFull = pictureSavePath.concat(pictureName, '_medium.', pictureExtension);
             //calculate the image height:
             var imageSize = calculateMinImageSize(640, 480, image);
             image.batch()
@@ -264,7 +266,7 @@ exports.uploadImage = function (req, res) {
                         picture.sizes.push(
                             {
                                 label: 'medium',
-                                source: picturePathFull,
+                                source: pictureSavePathFull,
                                 width: image.width(),
                                 height: image.height()
                             }
@@ -277,7 +279,8 @@ exports.uploadImage = function (req, res) {
             //calculate the image height:
             var imageSquareSize = {width: 150, height: 150};
             var imageSize = calculateMaxImageSize(imageSquareSize.width, imageSquareSize.height, image);
-            var picturePathFull = pictureSavePath.concat(pictureName, '_square.', pictureExtension);
+            var picturePathFull = picturePath.concat(pictureName, '_square.', pictureExtension);
+            var pictureSavePathFull = pictureSavePath.concat(pictureName, '_square.', pictureExtension);
             image.batch()
                 .resize(imageSize.width, imageSize.height, 'lanczos')
                 .crop(imageSquareSize.width, imageSquareSize.height)
@@ -288,7 +291,7 @@ exports.uploadImage = function (req, res) {
                         picture.sizes.push(
                             {
                                 label: 'square',
-                                source: picturePathFull,
+                                source: pictureSavePathFull,
                                 width: imageSquareSize.width,
                                 height: imageSquareSize.height
                             }

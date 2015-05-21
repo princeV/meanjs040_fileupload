@@ -2,7 +2,11 @@
 	<div class="page-header">
 		<h1 data-ng-bind="picture.name"></h1>
 		<h1 data-ng-bind="picture.fileName"></h1>
-		<h5 data-ng-bind="picture.imageURL"></h5>
+		<h5 data-ng-bind="picture.sizes[2].source"></h5>
+	</div>
+
+	<div>
+		<img data-ng-src={{picture.sizes[2].source}}>
 	</div>
 	<div class="pull-right" data-ng-show="authentication.user._id == picture.user._id">
 		<a class="btn btn-primary" href="/#!/pictures/{{picture._id}}/edit">
