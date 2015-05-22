@@ -1,7 +1,7 @@
 {
   "name": "meanjs",
   "description": "Full-Stack JavaScript with MongoDB, Express, AngularJS, and Node.js.",
-  "version": "0.4.2",
+  "version": "0.4.3",
   "private": false,
   "author": "https://github.com/meanjs/mean/graphs/contributors",
   "repository": {
@@ -33,6 +33,7 @@
     "forever": "~0.11.0",
     "glob": "~4.0.5",
     "grunt-cli": "~0.1.13",
+    "grunt-nodemon": "~0.4.0",
     "helmet": "~0.4.0",
     "lodash": "~2.4.1",
     "lwip": "0.0.6",
