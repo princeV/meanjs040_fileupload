@@ -108,7 +108,6 @@ exports.delete = function (req, res) {
     var picture = req.picture;
     var waterfallFunctions = [];
 
-
     //loop through the array of the picture sizes:
     var i;
     for (i = 0; i < picture.sizes.length; i++) {
@@ -116,7 +115,8 @@ exports.delete = function (req, res) {
             pictureSource: picture.sizes[i].source,
             /* jshint loopfunc:true */
             unlinkPicture: function (callback) {
-                fs.unlink(this.pictureSource, function (error) {
+                // unlink the picture source - for the path the client needs to be added (done with replace via split join)
+                fs.unlink(this.pictureSource.split('pictures').join('pictures/client'), function (error) {
                     if (error) {
                         callback(error);
                     } else {
