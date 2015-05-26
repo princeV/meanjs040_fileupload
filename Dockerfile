@@ -24,6 +24,9 @@ ADD . /home/mean
 # currently only works for development
 ENV NODE_ENV production
 
+# Add a volume to store the images:
+VOLUME /modules/pictures/client/img
+
 # Port 3000 for server
 # Port 35729 for livereload
 EXPOSE 3000 35729
